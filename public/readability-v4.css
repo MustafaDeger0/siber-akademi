@@ -1,4 +1,8 @@
 /* Readable text on the classroom projector and on a phone. */
+.special-reward{font-size:14px!important;color:#73591e!important}
+.answer-dialog .modal-top .eyebrow,.answer-popup-body>.eyebrow{font-size:13px;color:#4c6a5a}
+.answer-score-note,.auto-advance>span,.auto-advance .text-button{font-size:14px;color:#4c6859}
+.answer-explanation{color:#4f665c}.collection-count strong{font-size:22px}
 :root{--muted:#536b67}body{font-size:16px;line-height:1.6}p{color:#506865}small{line-height:1.55}
 .eyebrow,.side-label,.brand small,.course-tag,.scenario-bar small{font-size:12px;color:#526a65}
 .nav-item{font-size:15px}.breadcrumb,.header-name small{font-size:14px;color:#536b67}
