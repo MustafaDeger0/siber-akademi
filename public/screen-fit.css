@@ -28,6 +28,7 @@ dialog{max-height:calc(100dvh - 24px)}
  .round-rule{grid-column:1;grid-row:3;margin:0 18px 16px}.region-bottom{grid-column:2;grid-row:3;display:grid;grid-template-columns:1fr;gap:10px;padding:0 24px 12px}.region-badge{justify-content:center}.region-bottom .primary{width:100%}.region-dialog>.restart{grid-column:2;grid-row:4;margin-top:-6px}
 }
 @media(min-width:1000px) and (min-height:620px){
+ main:has(>.page-heading+.join-layout){padding-bottom:0}
  .layout:has(.map-layout) .sidebar>.brand{font-size:19px;gap:8px;white-space:nowrap}.layout:has(.map-layout) .sidebar>.brand small{font-size:10px;letter-spacing:1.8px}
  main:has(>.page-heading+.join-layout)>header{height:64px}main:has(>.page-heading+.join-layout)>.page-heading{margin:10px 0 14px}main:has(>.page-heading+.join-layout)>.page-heading h1{margin:2px 0;font-size:28px}
  .page-heading+.join-layout{display:block;padding:0;max-width:none}.page-heading+.join-layout .welcome-art{display:none}.page-heading+.join-layout .join-card{padding:18px 24px}.page-heading+.join-layout .join-card h2{margin:2px 0 14px;font-size:24px}
