@@ -24,7 +24,7 @@ test('HTTP profiles, cookie isolation, real leaderboard, server rewards and orig
   return {status:response.status,data:await response.json(),cookie};
  }
  try{
-  assert.equal((await request('/health')).status,200);for(const path of ['/app.mjs','/app.css','/worlds.mjs']){const asset=await request(path);assert.equal(asset.status,200);assert.ok((await asset.text()).length>50);}
+  assert.equal((await request('/health')).status,200);for(const path of ['/app.mjs','/app.css','/worlds.mjs','/characters.mjs','/badge-art.mjs','/rewards-v3.css']){const asset=await request(path);assert.equal(asset.status,200);assert.ok((await asset.text()).length>50);}
   const home=await request('/');assert.ok((await home.text()).includes('Siber Akademi'));
   assert.equal((await call(a,'/api/me')).data.player,null);assert.match(a.cookie,/^academy=[\w-]{43}$/);
   assert.match((await call(a,'/api/me')).cookie,/HttpOnly; SameSite=Lax/);
@@ -38,7 +38,7 @@ test('HTTP profiles, cookie isolation, real leaderboard, server rewards and orig
   assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).data.player.rewards.total,240);
   assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).data.player.rewards.total,240);
   const board=(await call(b,'/api/leaderboard')).data;
-  assert.equal(board.total,2);assert.equal(board.players[0].xp,240);assert.equal(board.mine.rank,2);assert.equal('id' in board.players[0],false);
+  const wrongRun=(await call(b,'/api/game',{type:'start',mission:'message'})).data.player.run.id;let wrong=await call(b,'/api/game',{type:'answer',runId:wrongRun,step:0,option:0});assert.equal(wrong.data.correct,false);assert.equal(wrong.data.player.run.step,1);assert.equal(wrong.data.player.rewards.total,0);let repeatWrong=await call(b,'/api/game',{type:'answer',runId:wrongRun,step:0,option:1});assert.equal(repeatWrong.data.replayed,true);assert.equal(repeatWrong.data.correct,false);assert.equal(repeatWrong.data.player.run.step,1);assert.equal(board.total,2);assert.equal(board.players[0].xp,240);assert.equal(board.mine.rank,2);assert.equal('id' in board.players[0],false);
   assert.equal((await call(a,'/api/profile',{username:'Hacker',avatar:'fox'},'PUT','https://other.example')).status,403);
   assert.equal((await call(a,'/api/profile',{username:'x'.repeat(5000),avatar:'fox'},'PUT')).status,413);
  }finally{server.emit('close');await db.close();}

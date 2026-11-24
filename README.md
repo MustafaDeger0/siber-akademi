@@ -4,6 +4,10 @@
 
 6 ada, her adada 5 karar ve toplam 30 senaryo bulunur: Mesaj Feneri, Parola Kalesi, Gizlilik Bahçesi, Dostluk Köprüsü, Bilgi Gözlemevi ve Oyun Limanı. Her ada çizimle temsil edilir; bölge penceresi, duraklar, örnek ekran, açıklamalı geri bildirim, rozet ve seviye ödülleri bulunur. Telefonlarda alt gezinme menüsü kullanılır.
 
+Sekiz farklı SVG yol arkadaşı ve her beceri için farklı şekilli koleksiyon madalyaları vardır. Eski avatar kimlikleri korunur. Doğru cevap ortada konfeti ve gerçek XP değişimiyle kutlanır; yanlış cevapta güvenli karar ve açıklaması gösterilir. Sonuç ekranı doğru cevapta 5,5 saniye, yanlışta 8,5 saniye sonra sonraki soruya geçer. Okuma için otomatik geçiş duraklatılabilir veya elle devam edilebilir. Ekran kapatılırsa zamanlayıcı iptal edilir.
+
+Yanlış karar −10 XP'dir; puan sıfırın altına düşmez. Aynı soru için eksi puan İstanbul tarihine göre günde bir kez uygulanır. Yanlış cevap da turu ilerletir; tekrar gönderilen istek puanı veya adımı değiştirmez. Eksik kararlar tekrar keşfedilecek olarak kaydedilir. Yeni ada madalyası ve bitirme ödülü, adadaki bütün kararlar öğrenildiğinde verilir; geçmişte kazanılmış madalyalar geri alınmaz.
+
 Önceki oyuncuların kullanıcı adı, XP, rozet ve kazanılmış soru ödülleri korunur. Önceden tamamlanan üç soruluk adalara ikişer yeni soru eklenir; eski ödüller tekrar verilmez. Yeni sürümde soruların tamamı `public/worlds.mjs` üzerinden sunucu ile paylaşılır.
 
 ## Çalıştırma
