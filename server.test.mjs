@@ -14,6 +14,21 @@ test('browser scripts parse and device identity note replaces unavailable accoun
  assert.ok(html.includes('Keşif kimliğin bu tarayıcıda saklanır'));
 });
 
+test('online correct answer enables next step while wrong answers allow another choice',async()=>{
+ const html=readFileSync(new URL('./public/index.html',import.meta.url),'utf8');
+ const handler=html.split('\n').find(line=>line.startsWith('check=async function()'));
+ assert.ok(handler);
+ for(const correct of [true,false]){
+  const button={disabled:false,isConnected:true};const options=[{disabled:false},{disabled:false},{disabled:false}];
+  const context={connection:{mode:'online'},networkBusy:false,answered:false,selected:1,serverRun:'demo',step:0,board:{},document:{querySelectorAll:()=>options},$:()=>button,localCheck(){context.answered=correct;button.textContent=correct?'Sonraki adım':'Kararımı kontrol et';},apiRequest:async()=>({player:{},correct}),hydratePlayer(){},render(){},connectionError(error){throw error}};
+  new Script(handler).runInNewContext(context);
+  await context.check();
+  assert.equal(context.networkBusy,false);
+  assert.equal(button.disabled,!correct);
+  assert.ok(options.every(option=>option.disabled===correct));
+ }
+});
+
 test('HTTP profiles, cookie isolation, real leaderboard, server rewards and origin checks',async()=>{
  process.env.SQLITE_PATH=':memory:';
  const db=await openDatabase('');const server=createApp(db,{production:false});
