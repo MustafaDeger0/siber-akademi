@@ -1,0 +1,42 @@
+/* Use horizontal space before asking learners to scroll. */
+.admin-layout{margin:0 auto;padding:16px 24px}.admin-layout h1{margin:12px 0 4px;font-size:28px}.admin-layout>p{margin:6px 0 12px}.admin-player{padding:8px 16px;margin:7px 0;gap:16px}.admin-player input{margin:2px 0 0;padding:7px 10px}.admin-player p{margin:0}.admin-player .secondary{padding:8px 12px;min-height:42px}.admin-search{gap:8px}.admin-search label{width:auto}.admin-search input{padding:9px 12px}.admin-search button{min-height:44px;padding:9px 12px}
+.admin-pagination{position:static;inset:auto;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 0;background:none;border:0;box-shadow:none}.admin-pagination span{font-size:15px}.admin-pagination button{font-size:15px;min-height:42px;padding:8px 12px}
+body:has(dialog[open]){overflow:hidden}
+dialog{max-height:calc(100dvh - 24px)}
+.modal-top{padding:10px 22px}.close-button{width:36px;height:36px}
+.quiz-dialog{width:min(1120px,calc(100% - 32px))}
+.quiz-body{padding:16px 24px}.quiz-progress{margin:8px 0 12px}.quiz-body h2{margin-bottom:12px}
+.scenario{margin-bottom:12px}.scenario-bar{padding:6px 12px}.scenario-content{padding:14px 16px}.scenario-content p{margin-top:8px}
+.question{margin-bottom:10px}.choices{gap:8px}.choice{padding:10px 13px;min-height:56px;line-height:1.45}
+.quiz-bottom{position:static;padding:12px 24px}.quiz-bottom .primary{min-height:44px}
+.region-dialog{width:min(980px,calc(100% - 32px))}
+.region-cover .island-art{width:110px}.region-cover{padding:10px 22px 16px}.region-cover h2{font-size:27px;margin:0 0 6px}.region-cover p{font-size:17px;line-height:1.5}.region-meta{margin-top:10px;gap:6px;flex-wrap:wrap}.region-meta span{padding:4px 8px}
+.stage-list{margin:0;padding:0 22px}.stage-list li{padding:10px 0;gap:10px}.stage-list b{font-size:17px;line-height:1.3}.stage-list small{margin-top:2px;font-size:14px;line-height:1.4}
+.round-rule{margin:0 22px 14px;padding:12px 14px;font-size:15px;line-height:1.5}.region-bottom{padding:12px 22px 16px;gap:12px}.region-badge svg{width:42px;height:50px}.region-badge{font-size:14px}.region-bottom .primary{font-size:16px}.restart{margin:0 auto 12px;padding:6px}
+@media(min-width:820px){
+ .quiz-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);column-gap:24px;align-items:start}
+ .quiz-meta,.quiz-progress,.quiz-body>h2{grid-column:1/-1}
+ .quiz-body>.scenario{grid-column:1;grid-row:4/6;margin:0;align-self:stretch}
+ .quiz-body>.question{grid-column:2;grid-row:4}
+ .quiz-body>.choices{grid-column:2;grid-row:5}
+ .scenario-content p,.choice,.question{font-size:18px}
+ .photo-preview{max-height:none;display:block;padding:10px;text-align:center}.photo-preview svg{max-height:125px;width:100%}.photo-preview>span{display:block;font-size:14px;margin-top:4px}
+ .region-dialog[open]{display:grid;grid-template-columns:minmax(240px,.85fr) minmax(0,1.4fr);align-items:start}
+ .region-dialog>.modal-top{grid-column:1/-1}.region-cover{grid-column:1;grid-row:2;background:linear-gradient(145deg,var(--light),#fffef8);align-self:stretch;padding:18px 24px}
+ .region-cover .island-art{width:145px}.region-meta span{font-size:14px}.stage-list{grid-column:2;grid-row:2;padding:8px 24px}.stage-list li{min-height:59px}
+ .round-rule{grid-column:1;grid-row:3;margin:0 18px 16px}.region-bottom{grid-column:2;grid-row:3;display:grid;grid-template-columns:1fr;gap:10px;padding:0 24px 12px}.region-badge{justify-content:center}.region-bottom .primary{width:100%}.region-dialog>.restart{grid-column:2;grid-row:4;margin-top:-6px}
+}
+@media(min-width:1000px) and (min-height:620px){
+ .layout:has(.map-layout){height:100dvh;min-height:0}.layout:has(.map-layout)>.sidebar{height:100dvh;overflow:auto;padding-top:22px}.layout:has(.map-layout) .guide-card{margin-top:28px}.layout:has(.map-layout) .side-label{margin-top:24px}.layout:has(.map-layout) .lesson-note{padding-top:16px}
+ main:has(.map-layout){height:100dvh;display:grid;grid-template-rows:64px auto minmax(0,1fr) 28px;padding-bottom:4px}
+ main:has(.map-layout)>header{height:64px}.page-heading:has(+.map-layout){margin:10px 0 14px}.page-heading:has(+.map-layout) h1{font-size:28px;margin:2px 0 3px}.page-heading:has(+.map-layout) .eyebrow{font-size:12px}
+ .map-layout{height:100%;min-height:0;grid-template-columns:minmax(0,1fr) 240px;gap:18px}.map-panel{height:100%;min-height:0;display:flex;flex-direction:column}.map-toolbar{padding:12px 18px;flex-shrink:0}.world-map{height:auto;min-height:0;flex:1}
+ .map-layout .island-art{max-height:min(17dvh,145px)}.island:nth-of-type(-n+3){--y:25%!important}.island:nth-of-type(n+4){--y:73%!important}.island-label{padding:7px 10px;min-width:155px}.island-label b{font-size:16px}.island-label small{font-size:14px}.map-caption{bottom:5px}
+ .journey{height:100%;min-height:0;gap:12px;grid-template-columns:1fr}.next-card,.daily-card,.level-card{padding:14px 18px}.next-card .next-art{height:72px;margin:0}.next-card .next-art .island-art{height:100%}.next-card h2{font-size:22px;margin:4px 0}.next-card p{margin:4px 0 12px}.next-card .eyebrow{font-size:12px}.daily-card p{margin:6px 0}.daily-dots{margin:10px 0}.level-card{display:none}
+ main:has(.map-layout)>.learning-strip{display:none}main:has(.map-layout)>footer{margin:4px 0 0;padding:0;font-size:12px}
+}
+@media(max-width:819px){
+ dialog{width:calc(100% - 16px);max-height:calc(100dvh - 16px);border-radius:18px}.modal-top{padding:8px 16px}.quiz-dialog{width:calc(100% - 16px)}.quiz-body{padding:12px 16px}.quiz-body h2{font-size:23px;margin-bottom:10px}.quiz-meta{font-size:12px;letter-spacing:0}.quiz-progress{margin:6px 0 10px}.scenario-sender{font-size:15px}.scenario-sender .icon{width:18px;height:18px;padding:3px}.scenario-content{padding:10px 13px}.scenario-content p,.question,.choice{font-size:17px;line-height:1.45}.scenario-content p{margin-top:6px}.scenario-bar{padding:4px 10px}.scenario{margin-bottom:10px}.choice{padding:9px 11px;min-height:50px;align-items:center}.choices{gap:7px}.quiz-bottom{padding:10px 16px 14px}.quiz-bottom .primary{font-size:16px;min-height:44px;padding:9px 12px}.photo-preview{margin-top:8px;padding:6px;max-height:90px}.photo-preview svg{max-height:74px;width:100px;flex-shrink:0}.photo-preview>span{font-size:14px}.password-preview{padding:10px;margin-top:8px}
+ .region-cover{display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:12px;text-align:left;padding:10px 16px}.region-cover .island-art{width:72px;grid-column:1;grid-row:1/3;align-self:center}.region-cover h2{grid-column:2;font-size:24px}.region-cover p{grid-column:2;font-size:16px;line-height:1.4}.region-meta{grid-column:1/-1;justify-content:flex-start;margin-top:8px}.region-meta span{font-size:14px}.stage-list{padding:0 16px}.stage-list li{padding:8px 0;min-height:50px}.stage-list b{font-size:16px}.stage-list small{font-size:14px}.round-rule{margin:10px 16px;padding:10px 12px;font-size:14px}.region-bottom{display:flex;flex-direction:row;align-items:center;padding:4px 16px 12px}.region-badge{font-size:13px;gap:6px}.region-badge svg{width:32px;height:40px}.region-bottom .primary{font-size:15px;min-height:48px;max-width:58%;padding:9px 12px}.restart{font-size:15px;margin:0 auto 8px;padding:4px}
+}
+@media(min-width:820px) and (max-height:700px){.region-cover .island-art{width:110px}.region-cover{padding:12px 22px}.stage-list li{min-height:53px;padding:8px 0}.quiz-body{padding-top:10px;padding-bottom:10px}.quiz-body>h2{font-size:23px}.quiz-progress{margin-bottom:8px}.quiz-bottom{padding-top:8px;padding-bottom:12px}.region-bottom{padding-top:4px}.round-rule{font-size:14px}}
