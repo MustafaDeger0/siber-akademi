@@ -9,6 +9,7 @@ export function createApp(db,{production=process.env.NODE_ENV==='production',pub
  const cookieName=production?'__Host-academy':'academy';
  const html=readFileSync(new URL('./public/index.html',import.meta.url));
  const favicon=readFileSync(new URL('./public/favicon.svg',import.meta.url));
+ const assets=new Map(['/app.css','/app.mjs','/worlds.mjs'].map(path=>[path,{body:readFileSync(new URL('./public'+path,import.meta.url)),type:path.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8'}]));
  const rates=new Map();
  const timer=setInterval(()=>rates.clear(),60000);timer.unref();
  const server=createServer(async(req,res)=>{
@@ -19,6 +20,7 @@ export function createApp(db,{production=process.env.NODE_ENV==='production',pub
    if(url.pathname==='/health'){await db.prepare('SELECT 1 AS ready').first();return send(200,'{"ok":true}');}
    if(req.method==='GET'&&url.pathname==='/')return send(200,html,'text/html; charset=utf-8');
    if(req.method==='GET'&&url.pathname==='/favicon.svg')return send(200,favicon,'image/svg+xml');
+   if(req.method==='GET'&&assets.has(url.pathname)){const asset=assets.get(url.pathname);return send(200,asset.body,asset.type);}
    if(!url.pathname.startsWith('/api/'))return send(404,'{"error":"Sayfa bulunamadı."}');
    if(!['GET','PUT','POST'].includes(req.method))return send(405,'{"error":"Geçersiz işlem."}');
    if(req.method!=='GET'&&req.headers.origin!==new URL(origin).origin)return send(403,'{"error":"İstek doğrulanamadı."}');

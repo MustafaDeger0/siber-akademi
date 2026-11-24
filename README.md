@@ -1,6 +1,10 @@
 # Siber Akademi
 
-Ortaokul öğrencileri için siber güvenlik görevleri, özgün SVG rozetler ve avatarlar, XP ödülleri ve ortak keşif sıralaması.
+5–6. sınıf Bilişim Teknolojileri ve Yazılım dersi için güvenli internet ve dijital vatandaşlık macerası. İlk prototip 5–7. sınıf düzeyine yönelikti; yenilenen dil ve görsel tasarım 5–6. sınıfa odaklanır.
+
+6 ada, her adada 5 karar ve toplam 30 senaryo bulunur: Mesaj Feneri, Parola Kalesi, Gizlilik Bahçesi, Dostluk Köprüsü, Bilgi Gözlemevi ve Oyun Limanı. Her ada çizimle temsil edilir; bölge penceresi, duraklar, örnek ekran, açıklamalı geri bildirim, rozet ve seviye ödülleri bulunur. Telefonlarda alt gezinme menüsü kullanılır.
+
+Önceki oyuncuların kullanıcı adı, XP, rozet ve kazanılmış soru ödülleri korunur. Önceden tamamlanan üç soruluk adalara ikişer yeni soru eklenir; eski ödüller tekrar verilmez. Yeni sürümde soruların tamamı `public/worlds.mjs` üzerinden sunucu ile paylaşılır.
 
 ## Çalıştırma
 

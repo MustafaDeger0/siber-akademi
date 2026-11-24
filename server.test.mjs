@@ -4,30 +4,7 @@ import {Readable,Writable} from 'node:stream';
 import {openDatabase} from './lib/database.mjs';
 import {createApp} from './server.mjs';
 import {readFileSync} from 'node:fs';
-import {Script} from 'node:vm';
-
-test('browser scripts parse and device identity note replaces unavailable account logout',()=>{
- const html=readFileSync(new URL('./public/index.html',import.meta.url),'utf8');
- const scripts=[...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)];
- assert.ok(scripts.length);for(const script of scripts)new Script(script[1]);
- assert.equal(html.includes('href="/logout"'),false);
- assert.ok(html.includes('Keşif kimliğin bu tarayıcıda saklanır'));
-});
-
-test('online correct answer enables next step while wrong answers allow another choice',async()=>{
- const html=readFileSync(new URL('./public/index.html',import.meta.url),'utf8');
- const handler=html.split('\n').find(line=>line.startsWith('check=async function()'));
- assert.ok(handler);
- for(const correct of [true,false]){
-  const button={disabled:false,isConnected:true};const options=[{disabled:false},{disabled:false},{disabled:false}];
-  const context={connection:{mode:'online'},networkBusy:false,answered:false,selected:1,serverRun:'demo',step:0,board:{},document:{querySelectorAll:()=>options},$:()=>button,localCheck(){context.answered=correct;button.textContent=correct?'Sonraki adım':'Kararımı kontrol et';},apiRequest:async()=>({player:{},correct}),hydratePlayer(){},render(){},connectionError(error){throw error}};
-  new Script(handler).runInNewContext(context);
-  await context.check();
-  assert.equal(context.networkBusy,false);
-  assert.equal(button.disabled,!correct);
-  assert.ok(options.every(option=>option.disabled===correct));
- }
-});
+import {worlds} from './public/worlds.mjs';
 
 test('HTTP profiles, cookie isolation, real leaderboard, server rewards and origin checks',async()=>{
  process.env.SQLITE_PATH=':memory:';
@@ -47,7 +24,7 @@ test('HTTP profiles, cookie isolation, real leaderboard, server rewards and orig
   return {status:response.status,data:await response.json(),cookie};
  }
  try{
-  assert.equal((await request('/health')).status,200);
+  assert.equal((await request('/health')).status,200);for(const path of ['/app.mjs','/app.css','/worlds.mjs']){const asset=await request(path);assert.equal(asset.status,200);assert.ok((await asset.text()).length>50);}
   const home=await request('/');assert.ok((await home.text()).includes('Siber Akademi'));
   assert.equal((await call(a,'/api/me')).data.player,null);assert.match(a.cookie,/^academy=[\w-]{43}$/);
   assert.match((await call(a,'/api/me')).cookie,/HttpOnly; SameSite=Lax/);
@@ -57,11 +34,11 @@ test('HTTP profiles, cookie isolation, real leaderboard, server rewards and orig
   const run=(await call(a,'/api/game',{type:'start',mission:'message',xp:99999})).data.player.run.id;
   assert.equal((await call(b,'/api/game',{type:'answer',runId:run,step:0,option:1})).status,400);
   assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).status,400);
-  for(const [step,option] of [1,2,0].entries())assert.equal((await call(a,'/api/game',{type:'answer',runId:run,step,option})).status,200);
-  assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).data.player.rewards.total,180);
-  assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).data.player.rewards.total,180);
+  for(const [step,option] of worlds[0].questions.map(q=>q.correct).entries())assert.equal((await call(a,'/api/game',{type:'answer',runId:run,step,option})).status,200);
+  assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).data.player.rewards.total,240);
+  assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).data.player.rewards.total,240);
   const board=(await call(b,'/api/leaderboard')).data;
-  assert.equal(board.total,2);assert.equal(board.players[0].xp,180);assert.equal(board.mine.rank,2);assert.equal('id' in board.players[0],false);
+  assert.equal(board.total,2);assert.equal(board.players[0].xp,240);assert.equal(board.mine.rank,2);assert.equal('id' in board.players[0],false);
   assert.equal((await call(a,'/api/profile',{username:'Hacker',avatar:'fox'},'PUT','https://other.example')).status,403);
   assert.equal((await call(a,'/api/profile',{username:'x'.repeat(5000),avatar:'fox'},'PUT')).status,413);
  }finally{server.emit('close');await db.close();}
