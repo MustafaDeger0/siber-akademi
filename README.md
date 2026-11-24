@@ -25,3 +25,16 @@ Web Service / Node / Free, build: `npm install --omit=dev`, start: `npm start`, 
 İlk ziyarette güvenli, HttpOnly bir cihaz çerezi oluşturulur. Öğrenci kullanıcı adını ve avatarını seçer; e-posta, gerçek ad veya ChatGPT hesabı gerekmez. Bu sürümde kimlik kullanılan tarayıcıya bağlıdır. Çerezlerin silinmesi ya da farklı cihaz kullanılması yeni bir keşif kimliği açar. Kullanıcı adı tek başına giriş anahtarı değildir; başka birinin adıyla hesabına erişilemez.
 
 XP ve görev sonuçları sunucuda hesaplanır. Aynı ödül tekrar puan kazandırmaz. Ortak sıralama sadece kullanıcı adı, avatar, puan ve tamamlanan görev sayısını gösterir. Mevcut görev içeriği ve prototipin görsel tasarımı korunur.
+
+
+## Devam etme ve sıfırlama
+
+Her adanın oturumu ayrı saklanır. Devam et, kayıtlı sıradaki soruyu açar ve öğrenilmiş soruları atlar; önceki sürümlerde kazanılan soru kayıtları da dikkate alınır. Baştan tekrar keşfet tüm soruları yeniden açar; kazanılan XP yeniden verilmez. Tamamlanmış bir turdaki yanlışlar, sonraki keşifte öncelik kazanır.
+
+Kaşif kartım → İlerlememi sıfırla, açık bir onaydan sonra yalnızca o tarayıcıya ait oyuncunun XP, rozet ve tüm ilerlemesini sıfırlar. Takma ad ve avatar korunur. Eski tur kimlikleri geçersiz olur.
+
+## Yönetici paneli
+
+/yonetim adresi takma ad arama ve değiştirme ekranıdır. Render servisinde SIBER_ADMIN_PASSWORD ortam değişkeni en az 16 karakterli güçlü bir şifre olarak ayarlanır; değeri kaynak koduna yazılmaz. Bu değişken Blueprint dışında servis üzerinde tutulur; Blueprint'te tanımlı olmayan mevcut değişkenler korunur. Şifre yoksa yönetim API'si kapalıdır. Yerelde de aynı değişken kullanılabilir.
+
+Giriş oturumu HttpOnly, üretimde Secure ve SameSite=Strict çereziyle 8 saat sürer. Başarısız girişler sınırlıdır. Öğrenci oturum anahtarları yönetici listesinde paylaşılmaz; sunucuya özel referans kullanılır. Ad değişikliği puan, avatar ve ilerlemeye dokunmaz. Şifre değişimi veya yeniden dağıtım yönetici oturumlarını kapatır. Yönetici şifresini yalnızca yönetim girişinde kullanın.

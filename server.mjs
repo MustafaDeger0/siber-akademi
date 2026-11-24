@@ -4,12 +4,15 @@ import {randomBytes} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import {openDatabase} from './lib/database.mjs';
 import {api} from './lib/api.mjs';
+import {createAdmin} from './lib/admin.mjs';
 
-export function createApp(db,{production=process.env.NODE_ENV==='production',publicUrl=process.env.RENDER_EXTERNAL_URL}={}){
+export function createApp(db,{production=process.env.NODE_ENV==='production',publicUrl=process.env.RENDER_EXTERNAL_URL,adminSecret=process.env.SIBER_ADMIN_PASSWORD}={}){
+ const admin=createAdmin(db,{secret:adminSecret,production});
+ const adminHtml=readFileSync(new URL('./public/admin.html',import.meta.url));
  const cookieName=production?'__Host-academy':'academy';
  const html=readFileSync(new URL('./public/index.html',import.meta.url));
  const favicon=readFileSync(new URL('./public/favicon.svg',import.meta.url));
- const assets=new Map(['/app.css','/app.mjs','/worlds.mjs','/characters.mjs','/badge-art.mjs','/rewards-v3.css'].map(path=>[path,{body:readFileSync(new URL('./public'+path,import.meta.url)),type:path.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8'}]));
+ const assets=new Map(['/app.css','/app.mjs','/worlds.mjs','/characters.mjs','/badge-art.mjs','/rewards-v3.css','/readability-v4.css','/admin.mjs'].map(path=>[path,{body:readFileSync(new URL('./public'+path,import.meta.url)),type:path.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8'}]));
  const rates=new Map();
  const timer=setInterval(()=>rates.clear(),60000);timer.unref();
  const server=createServer(async(req,res)=>{
@@ -19,6 +22,7 @@ export function createApp(db,{production=process.env.NODE_ENV==='production',pub
    const url=new URL(req.url,origin);
    if(url.pathname==='/health'){await db.prepare('SELECT 1 AS ready').first();return send(200,'{"ok":true}');}
    if(req.method==='GET'&&url.pathname==='/')return send(200,html,'text/html; charset=utf-8');
+   if(req.method==='GET'&&url.pathname==='/yonetim')return send(200,adminHtml,'text/html; charset=utf-8');
    if(req.method==='GET'&&url.pathname==='/favicon.svg')return send(200,favicon,'image/svg+xml');
    if(req.method==='GET'&&assets.has(url.pathname)){const asset=assets.get(url.pathname);return send(200,asset.body,asset.type);}
    if(!url.pathname.startsWith('/api/'))return send(404,'{"error":"Sayfa bulunamadı."}');
@@ -34,7 +38,8 @@ export function createApp(db,{production=process.env.NODE_ENV==='production',pub
    let size=0;const chunks=[];
    for await(const chunk of req){size+=chunk.length;if(size>4096){send(413,'{"error":"İstek çok uzun."}');return;}chunks.push(chunk);}
    const request=new Request(url,{method:req.method,headers:{...req.headers,origin:req.headers.origin||''},body:req.method==='GET'?undefined:Buffer.concat(chunks)});
-   const response=await api(request,db,{userId:token});
+   const response=url.pathname.startsWith('/api/admin/')?await admin(request,req.socket?.remoteAddress||'unknown'):await api(request,db,{userId:token});
+   if(response.headers.has('set-cookie'))res.setHeader('Set-Cookie',response.headers.get('set-cookie'));
    res.writeHead(response.status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});
    res.end(Buffer.from(await response.arrayBuffer()));
   }catch(error){console.error('Request failed:',error.code||error.name);if(!res.headersSent)send(500,'{"error":"Bağlantı şu an kurulamadı. Yeniden dene."}');else res.end();}

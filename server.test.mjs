@@ -41,5 +41,16 @@ test('HTTP profiles, cookie isolation, real leaderboard, server rewards and orig
   const wrongRun=(await call(b,'/api/game',{type:'start',mission:'message'})).data.player.run.id;let wrong=await call(b,'/api/game',{type:'answer',runId:wrongRun,step:0,option:0});assert.equal(wrong.data.correct,false);assert.equal(wrong.data.player.run.step,1);assert.equal(wrong.data.player.rewards.total,0);let repeatWrong=await call(b,'/api/game',{type:'answer',runId:wrongRun,step:0,option:1});assert.equal(repeatWrong.data.replayed,true);assert.equal(repeatWrong.data.correct,false);assert.equal(repeatWrong.data.player.run.step,1);assert.equal(board.total,2);assert.equal(board.players[0].xp,240);assert.equal(board.mine.rank,2);assert.equal('id' in board.players[0],false);
   assert.equal((await call(a,'/api/profile',{username:'Hacker',avatar:'fox'},'PUT','https://other.example')).status,403);
   assert.equal((await call(a,'/api/profile',{username:'x'.repeat(5000),avatar:'fox'},'PUT')).status,413);
+  assert.equal((await request('/yonetim')).status,200);
+  assert.equal((await request('/admin.mjs')).status,200);
+  assert.equal((await request('/readability-v4.css')).status,200);
+  assert.equal((await call(a,'/api/reset',{})).status,400);
+  assert.equal((await call(a,'/api/reset',{confirmation:'SIFIRLA'},'POST','https://bad.example')).status,403);
+  const reset=await call(a,'/api/reset',{confirmation:'SIFIRLA'});assert.equal(reset.status,200);
+  assert.equal(reset.data.player.username,'Kasif_1');assert.equal(reset.data.player.avatar,'fox');
+  assert.equal(reset.data.player.rewards.total,0);assert.deepEqual(reset.data.player.rewards.claimed,[]);assert.deepEqual(reset.data.player.state.done,[]);assert.equal(reset.data.player.run,null);assert.deepEqual(reset.data.player.runs,{});
+  assert.equal((await call(b,'/api/me')).data.player.run.id,wrongRun);
+  assert.equal((await call(a,'/api/game',{type:'answer',runId:run,step:0,option:1})).status,400);
+  assert.equal((await call(a,'/api/leaderboard')).data.players.find(p=>p.username==='Kasif_1').xp,0);
  }finally{server.emit('close');await db.close();}
 });
