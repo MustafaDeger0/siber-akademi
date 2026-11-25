@@ -6,7 +6,7 @@
 
 Sekiz farklı SVG yol arkadaşı ve her beceri için farklı şekilli koleksiyon madalyaları vardır. Eski avatar kimlikleri korunur. Doğru cevap ortada konfeti ve gerçek XP değişimiyle kutlanır; yanlış cevapta güvenli karar ve açıklaması gösterilir. Sonuç ekranı doğru cevapta 5,5 saniye, yanlışta 8,5 saniye sonra sonraki soruya geçer. Okuma için otomatik geçiş duraklatılabilir veya elle devam edilebilir. Ekran kapatılırsa zamanlayıcı iptal edilir.
 
-Yanlış karar −10 XP'dir; puan sıfırın altına düşmez. Aynı soru için eksi puan İstanbul tarihine göre günde bir kez uygulanır. Yanlış cevap da turu ilerletir; tekrar gönderilen istek puanı veya adımı değiştirmez. Eksik kararlar tekrar keşfedilecek olarak kaydedilir. Yeni ada madalyası ve bitirme ödülü, adadaki bütün kararlar öğrenildiğinde verilir; geçmişte kazanılmış madalyalar geri alınmaz.
+Yanlış cevapta XP kesilmez. Yanlış cevap da turu ilerletir; tekrar gönderilen istek puanı veya adımı değiştirmez. Eksik kararlar tekrar keşfedilecek olarak kaydedilir. Yeni ada madalyası ve bitirme ödülü, adadaki bütün kararlar öğrenildiğinde verilir; geçmişte kazanılmış madalyalar geri alınmaz.
 
 Önceki oyuncuların kullanıcı adı, XP, rozet ve kazanılmış soru ödülleri korunur. Önceden tamamlanan üç soruluk adalara ikişer yeni soru eklenir; eski ödüller tekrar verilmez. Yeni sürümde soruların tamamı `public/worlds.mjs` üzerinden sunucu ile paylaşılır.
 
@@ -54,3 +54,7 @@ Yönetici oyuncu listesinde öğrenilen karar, tekrar gereken karar ve son final
 Adalar 1–6 sırasında açılır. Beş kararı öğrenip adanın turunu tamamlamak bir sonraki adayı açar. Açılmış bir ada tekrar oynanırken hata yapmak geçmiş açılmayı geri almaz. Eski XP ve rozetler korunur; eski üç soruluk tamamlamalar, yeni beş sorunun öğrenilmesi yerine geçmez.
 
 İlk adada temel ipucu tanıma vardır. Sonraki adalar çoklu seçim, sıralama, eşleştirme ve doğru/yanlış etkinlikleriyle bilgileri birleştirmeyi gerektirir. Yeni etkinlik yanıtları istemcinin puanına güvenmeden sunucuda değerlendirilir. Yanlış cevap açıklamasında otomatik geçiş başlangıçta durur; öğrenci hazır olunca devam eder.
+
+## Öğrenme atölyesi
+
+Maceram → Becerilerim ekranı, son yanıtlara göre destek önerisi ve zamanlı hatırlama planını gösterir. Uygula sekmesinde hesap ayarları ve kanıt işaretleme simülasyonları vardır. Takımım ortak görevinde üyelerin ayrı parçaları çözmesi ve birleşen planı onaylaması gerekir. Bu etkinlikler XP kazandırmaz veya düşürmez. Yönetim panelindeki öğrenme gözlemi alanı, öğrenciye geri bildirim iletir. Ayrıntılar GAMIFICATION.md dosyasındadır.

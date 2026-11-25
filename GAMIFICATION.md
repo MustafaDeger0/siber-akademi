@@ -19,10 +19,20 @@ Kaynak: Selay Arkün Kocadere, **BTÖ 422 Eğitsel Bilgisayar Oyunları Tasarım
 
 ## Önceki gereksinimlerle uyum
 
-Kullanıcının önceki isteği olan puanlı turda yanlış cevap için −10 XP korunmuştur. Sunumdaki destekleyici başlangıç ilkesi için isteğe bağlı puansız ısınma sunulur; puan sıfırın altına düşmez ve aynı soru için günde bir kez kesilir. Kullanıcı adı, avatar, geçmiş XP, rozet ve soru ödülleri korunur. Final ve koleksiyon harcamaları sunucuda doğrulanır; istemcinin gönderdiği puan veya bakiye dikkate alınmaz.
+Yanlış cevapta XP kesilmez; açıklama ve yeniden deneme desteklenir. Ana görevlerde yeni doğru cevap ödülleri korunur. Uyarlanan tekrar ve uygulama görevleri puansızdır. Kullanıcı adı, avatar, geçmiş XP, rozet ve soru ödülleri korunur. Final ve koleksiyon harcamaları sunucuda doğrulanır; istemcinin gönderdiği puan veya bakiye dikkate alınmaz.
 
 Takımda gerçek ad veya iletişim bilgisi istenmez. Açık sohbet ve dış mesajlaşma yerine yapılandırılmış teşekkür, ortak hedef ve hediye akışları kullanılır. Öğrenci oturum anahtarları ekip yanıtlarında paylaşılmaz. Hediye aktarımı işlem bütünlüğüyle yapılır; aynı işlem tekrar gönderildiğinde çift aktarım oluşmaz.
 
 ## Ekran düzeni
 
-Profil, eski karşılama sayfasını yeniden kullanmaz. Masaüstünde ekran yüksekliğine göre başlık, profil formu ve sıfırlama alanı ayrı satırlara yerleşir. Maceram penceresi Hikâyem, Koleksiyon, Takımım, Becerilerim ve Final sekmelerinden oluşur. Koleksiyon ve takım üyeleri sayfalanır. Küçük ekranlarda veya büyütülmüş yazılarda içeriği kesmek yerine kaydırma kullanılabilir.
+Profil, eski karşılama sayfasını yeniden kullanmaz. Masaüstünde ekran yüksekliğine göre başlık, profil formu ve sıfırlama alanı ayrı satırlara yerleşir. Maceram penceresi Hikâyem, Uygula, Takımım, Becerilerim ve Final sekmelerinden oluşur. Koleksiyon ve takım üyeleri sayfalanır. Küçük ekranlarda veya büyütülmüş yazılarda içeriği kesmek yerine kaydırma kullanılabilir.
+
+## Öğrenme odaklı iyileştirmeler
+
+- Maceram, Becerilerim ile açılır. Koleksiyon ikincil bir bağlantıdır.
+- Son altı yanıtın en az ikisinde hata varsa destekli örnek; hatasız üç bağımsız başarıda birden fazla koşul içeren görev önerilir. Bu kural tabanlı destek, standartlaştırılmış öğrenci yeteneği ölçümü değildir.
+- Ada ustalığından bir gün sonra ilk hatırlama; zamanında ve ipucusuz başarıda 3, 7, 14 günlük aralıklar. İpucuyla başarı veya hata ertesi güne döner. Erken çalışma aralığı ilerletmez. Eski kayıtlarda geçmiş hatırlama başarısı varsayılmaz; ilk kontrol önerilir. Takvim yalnızca uygulama içinde görünür.
+- Ayar simülasyonu ve mesaj üzerinde kanıt işaretleme, bilgiyi örnek bir ekranda uygulamayı ister. Bunlar gerçek hesap ayarlarını değiştirmez; sınıf dışı davranış değişikliğini tek başına kanıtlamaz.
+- Ortak görevde kanıt, eylem planı ve güvenli paylaşım rolleri vardır. En az iki üyenin her biri kendi parçasını çözer ve herkes birleşen planı onaylar. Üyelik değişirse yeni ortak plan başlar. Puan toplama hedefi bu görevden ayrıdır.
+- Yönetici 500 karaktere kadar gözlem/öneri kaydeder. Öğrenci Becerilerim ekranında okur. Not sıfırlamada korunur; öğretmen silebilir. Uygulama, hatırlama ve ortak çözüm göstergeleri yönetim panelindedir.
+- Çeldiriciler yaygın yanlış akıl yürütmelere yaklaştırılmıştır. Güçlük için gerçek öğrenci pilotu ve madde analizi hâlâ gereklidir. Mevcut soru bankası sonludur; uyarlama yeni soru üretmez.

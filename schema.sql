@@ -28,3 +28,4 @@ CREATE TABLE IF NOT EXISTS crew_events (
  created_at BIGINT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS crew_events_thanks ON crew_events(sender_id,recipient_id,kind,day_key);
+CREATE TABLE IF NOT EXISTS crew_projects (code TEXT PRIMARY KEY REFERENCES crews(code) ON DELETE CASCADE,document TEXT NOT NULL);
