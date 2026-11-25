@@ -1,3 +1,4 @@
+import {applyChallenges} from './challenge-content.mjs';
 const q=(title,kind,from,text,ask,options,correct,why,hint)=>({title,kind,from,text,ask,options,correct,why,hint});
 export const course={grade:'5–6. sınıf',lesson:'Bilişim Teknolojileri ve Yazılım',topic:'Güvenli internet ve dijital vatandaşlık'};
 export const worlds=[
@@ -37,5 +38,6 @@ q('Satın alma düğmesi','shop','Oyun mağazası','Kostüm paketi: 149 TL. Sat�
 q('İndirme yeri önemli','desktop','Arama sonucu','“Oyunun özel sürümü” yazan bir sitede indirme düğmesi var.','Nereden indirmek daha güvenlidir?',['En çok indirme düğmesi olan sayfadan','Dosya küçükse herhangi bir siteden','Yetişkin desteğiyle resmî mağaza veya geliştiricinin doğrulanmış kanalından'],2,'Resmî kaynakları tercih et ve yetişkinle kontrol et.','Dosyayı kimin hazırladığını nasıl kontrol edebilirsin?'),
 q('Mola zamanı','notice','Oyun planım','Ailenle belirlediğin oyun süresi bitti. Arkadaşın “Bir tur daha” diyor.','Planına uygun seçimin hangisi?',['Ne kadar oynadığımı takip etmeden sürdürürüm','Arkadaşıma mola vereceğimi söyleyip oyunu kapatırım','Süreyi gizlice uzatırım'],1,'Önceden konuştuğun plana uymak mola vermeyi kolaylaştırır. Sonra devam edebilirsiniz.','Eğlenirken planını nasıl koruyabilirsin?'),
 q('Takas teklifi','chat','Tanımadığın oyuncu','Önce eşyalarını gönder, sonra daha değerlisini yollarım.','Hangi yol daha güvenli?',['Eşya göndermem; oyunun kurallarını ve güvenli takas sistemini yetişkinimle kontrol ederim','Profili renkliyse kabul ederim','Önce arkadaşımın eşyalarını gönderirim'],0,'Bir oyuncunun sözü, eşyalarını geri alacağını garanti etmez. Kuralları kontrol et.','Sözünü tutmazsa eşyalarını geri alabilir misin?')]}
-];
+ ];
+applyChallenges(worlds);
 export const ranks=[{at:0,name:'Yeni Kaşif'},{at:150,name:'İpucu Avcısı'},{at:400,name:'Kalkan Ustası'},{at:750,name:'Dijital Koruyucu'},{at:1100,name:'Akademi Kahramanı'}];

@@ -1,8 +1,8 @@
 export const paths=[
- {id:'explorer',name:'İz Sürücü',icon:'map',description:'Merak ettiğin adadan başla, ipuçlarını keşfet.',order:['message','privacy','truth','account','gaming','kindness']},
- {id:'achiever',name:'Ustalık Avcısı',icon:'badge',description:'Eksik kararlarını tamamla, madalyalarını parlat.',order:['account','message','privacy','truth','gaming','kindness']},
- {id:'social',name:'Takım Yoldaşı',icon:'kindness',description:'Birlikte düşün, arkadaşına destek ol.',order:['kindness','gaming','message','privacy','account','truth']},
- {id:'challenger',name:'Kendime Rakibim',icon:'league',description:'Kendi ilerlemeni izle, istersen lige göz at.',order:['truth','account','gaming','message','privacy','kindness']}
+ {id:'explorer',name:'İz Sürücü',icon:'map',description:'Açılan adada ipuçları kendiliğinden açılsın.'},
+ {id:'achiever',name:'Ustalık Avcısı',icon:'badge',description:'Becerilerini incele, eksik kararlarını güçlendir.'},
+ {id:'social',name:'Takım Yoldaşı',icon:'kindness',description:'Birlikte düşün, arkadaşına destek ol.'},
+ {id:'challenger',name:'Kendime Rakibim',icon:'league',description:'Kendi ilerlemeni izle, istersen lige göz at.'}
 ];
 export const chapters=[
  {at:0,title:'Sönen fenerlerin sırrı',text:'Sis Bulutu, Keşif Adaları’nın güvenli yollarını gizledi. Piksel’le altı ışık parçasını bul; her parça öğrendiğin bir dijital beceriyle parlıyor.'},

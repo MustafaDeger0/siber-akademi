@@ -24,8 +24,26 @@ try{
  await page.locator('[data-view="profile"]').first().click();await page.locator('.profile-screen').waitFor();
  for(const [width,height] of [[1536,698],[1920,870],[1280,720]]){await page.setViewportSize({width,height});const layout=await page.evaluate(()=>({page:document.documentElement.scrollHeight,view:innerHeight,card:document.querySelector('.profile-card').scrollHeight,cardClient:document.querySelector('.profile-card').clientHeight,side:document.querySelector('.sidebar').scrollHeight,sideClient:document.querySelector('.sidebar').clientHeight}));assert.ok(layout.page<=height+1,JSON.stringify({width,height,...layout}));assert.ok(layout.card<=layout.cardClient+1,JSON.stringify(layout));console.log('Profile fit',width,height,JSON.stringify(layout));}
  await page.setViewportSize({width:1536,height:698});await shot('profile');
+
+ await page.locator('[data-view="map"]').first().click();assert.equal(await page.locator('button.island[data-world="account"]').isDisabled(),true);assert.equal(await page.locator('button.island[data-world="message"]').isEnabled(),true);
+ for(const [mission,index] of [['account',3],['account',4],['privacy',4],['kindness',2]]){
+  const order=Object.keys(answers),position=order.indexOf(mission),fixture=fresh();fixture.done=order.slice(0,position);fixture.cleared=[...fixture.done];fixture.adventure={introduced:true};
+  for(const id of fixture.done)for(let i=0;i<5;i++)fixture.claimed.push(id+':'+i);
+  for(let i=0;i<5;i++)if(i!==index)fixture.claimed.push(mission+':'+i);fixture.total=fixture.claimed.length*30;
+  await db.prepare('UPDATE players SET document=?,xp=?,completed=? WHERE username=?').bind(JSON.stringify(fixture),fixture.total,fixture.done.length,'UI_Kasif').run();await page.reload();await waitReady();await page.locator('button.island[data-world="'+mission+'"]').click();await page.locator('#start-region').click();await page.locator('.quiz-dialog').waitFor();
+  const response=answers[mission][index];
+  if(mission==='account'&&index===3){for(const option of response)await page.locator('[data-option="'+option+'"]').click();await shot('multi');}
+  else if(mission==='account'){
+   for(let target=0;target<response.length;target++){const labels=await page.locator('.order-label').allTextContents();const {worlds}=await import('../public/worlds.mjs');const wanted=worlds.find(w=>w.id===mission).questions[index].options[response[target]];let from=labels.indexOf(wanted);while(from>target){await page.locator('[data-move="'+from+':-1"]').click();from--;}}
+   await shot('order');
+  }else if(mission==='privacy'){for(let i=0;i<response.length;i++)await page.locator('[data-match="'+i+'"]').selectOption(String(response[i]));await shot('match');}
+  else{await page.locator('[data-option="'+response+'"]').click();await shot('binary');}
+  const activityFit=await page.locator('dialog').evaluate(el=>({client:el.clientHeight,scroll:el.scrollHeight}));assert.ok(activityFit.scroll<=activityFit.client+1,JSON.stringify({mission,index,...activityFit}));assert.equal(await page.locator('#answer-action').isEnabled(),true);await page.locator('#answer-action').click();await page.locator('.answer-success').waitFor();await page.locator('#continue-answer').click();await page.locator('.reward-dialog').waitFor();await page.locator('#close-modal').click();
+ }
+ console.log('Sequential map locks and all four new activity widgets passed');
+
  await page.locator('#open-adventure').click();await page.locator('#adventure-content').waitFor();await page.locator('[data-path="social"]').click();await page.locator('[data-path="social"][aria-pressed="true"]').waitFor();
- await tab('final');assert.equal(await page.locator('#start-final').isDisabled(),true);await tab('collection');assert.equal(await page.locator('[data-buy="compass"]').isDisabled(),true);
+ await tab('final');assert.equal(await page.locator('#start-final').isDisabled(),true);await tab('collection');assert.equal(await page.locator('[data-buy="compass"]').isEnabled(),true);
  await page.locator('#close-adventure').click();
  const d=fresh();d.total=1200;for(const [id,list] of Object.entries(answers)){d.done.push(id);for(let i=0;i<list.length;i++)d.claimed.push(id+':'+i);}d.adventure={path:'social',introduced:true};
  await db.prepare('UPDATE players SET document=?,xp=?,completed=6 WHERE username=?').bind(JSON.stringify(d),1200,'UI_Kasif').run();
@@ -38,6 +56,7 @@ try{
  for(let step=0;step<6;step++){await page.locator('[data-option="'+finalQuestions[step].correct+'"]').click();await page.locator('#answer-action').click();await page.locator('#continue-answer').waitFor();await page.locator('#continue-answer').click();if(step<5)await page.locator('.quiz-dialog').waitFor();}
  await page.locator('.final-score').waitFor();assert.match(await page.locator('.final-score').innerText(),/6 \/ 6/);assert.match(await page.locator('.final-intro h2').innerText(),/Kalkan/);await shot('final');
  await page.locator('#close-adventure').click();await page.locator('[data-view="map"]').first().click();await page.locator('[data-world="message"]').first().click();await page.locator('#practice-region').click();await page.locator('.quiz-dialog').waitFor();assert.match(await page.locator('.quiz-meta').innerText(),/ISINMA/);await page.setViewportSize({width:390,height:844});await shot('phone-quiz');const width=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth}));assert.ok(width.scroll<=width.width);await page.locator('#close-modal').click();
+ await page.locator('button.island[data-world="message"]').click();await page.locator('#start-region').click();await page.locator('[data-option="0"]').click();await page.locator('#answer-action').click();await page.locator('.answer-learning').waitFor();assert.match(await page.locator('#auto-label').innerText(),/Okuma molası/);await page.locator('#close-modal').click();
  await page.locator('[data-view="profile"]').first().click();await page.locator('#reset-progress').click();await page.locator('#cancel-reset').click();assert.equal(await page.locator('dialog').evaluate(el=>el.open),false);
  assert.deepEqual(errors,[]);console.log('UI flows passed: profile fit, paths, locks, purchase/equip, team gift, six final questions, practice, reset cancel, phone width');
 }catch(error){console.error(await page.locator('body').innerText());throw error;}finally{await browser.close();server.emit('close');await db.close();}

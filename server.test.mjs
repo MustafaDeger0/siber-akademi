@@ -31,11 +31,15 @@ test('HTTP profiles, cookie isolation, real leaderboard, server rewards and orig
   assert.equal((await call(a,'/api/profile',{username:'Kasif_1',avatar:'fox'},'PUT')).status,200);
   assert.equal((await call(b,'/api/profile',{username:'Kasif_1',avatar:'fox'},'PUT')).status,409);
   assert.equal((await call(b,'/api/profile',{username:'Kasif_2',avatar:'cat'},'PUT')).status,200);
+  assert.deepEqual((await call(a,'/api/me')).data.player.state.unlocked,['message']);
+  for(const mode of ['resume','restart','practice'])assert.equal((await call(a,'/api/game',{type:'start',mission:'account',mode,unlocked:['account']})).status,400);
   const run=(await call(a,'/api/game',{type:'start',mission:'message',xp:99999})).data.player.run.id;
   assert.equal((await call(b,'/api/game',{type:'answer',runId:run,step:0,option:1})).status,400);
   assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).status,400);
   for(const [step,option] of worlds[0].questions.map(q=>q.correct).entries())assert.equal((await call(a,'/api/game',{type:'answer',runId:run,step,option})).status,200);
+  assert.equal((await call(a,'/api/game',{type:'start',mission:'account'})).status,400);
   assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).data.player.rewards.total,240);
+  assert.deepEqual((await call(a,'/api/me')).data.player.state.unlocked,['message','account']);
   assert.equal((await call(a,'/api/game',{type:'complete',runId:run})).data.player.rewards.total,240);
   const board=(await call(b,'/api/leaderboard')).data;
   const wrongRun=(await call(b,'/api/game',{type:'start',mission:'message'})).data.player.run.id;let wrong=await call(b,'/api/game',{type:'answer',runId:wrongRun,step:0,option:0});assert.equal(wrong.data.correct,false);assert.equal(wrong.data.player.run.step,1);assert.equal(wrong.data.player.rewards.total,0);let repeatWrong=await call(b,'/api/game',{type:'answer',runId:wrongRun,step:0,option:1});assert.equal(repeatWrong.data.replayed,true);assert.equal(repeatWrong.data.correct,false);assert.equal(repeatWrong.data.player.run.step,1);assert.equal(board.total,2);assert.equal(board.players[0].xp,240);assert.equal(board.mine.rank,2);assert.equal('id' in board.players[0],false);

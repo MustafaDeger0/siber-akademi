@@ -6,10 +6,10 @@ Kaynak: Selay Arkün Kocadere, **BTÖ 422 Eğitsel Bilgisayar Oyunları Tasarım
 | --- | --- |
 | Ana hedef ve küçük alt hedefler (s.32) | Her adada açık öğrenme hedefi; Becerilerim ekranında altı beceri ve eksik kararlar. |
 | Hikâye, adalar, kazanımlar (s.15–21, 28) | Sis Bulutu anlatısı; 0, 2, 4 ve 6 adada ustalıkla açılan dört hikâye bölümü; altı ışık parçası ve Ortak Kalkan. |
-| Oyuncu türleri ve farklı yollar (s.29–32) | İz Sürücü, Ustalık Avcısı, Takım Yoldaşı ve Kendime Rakibim tercihleri. Tercih bir kişilik testi değildir; değiştirilebilir ve önerilen adayı etkiler. |
+| Oyuncu türleri ve farklı yollar (s.29–32) | İz Sürücü, Ustalık Avcısı, Takım Yoldaşı ve Kendime Rakibim tercihleri. Tercih bir kişilik testi değildir; değiştirilebilir; ipucunun açık gelmesini ve tercih edilen destek ekranına erişimi etkiler. Ada sırası bütün tercihlerde aynıdır. |
 | Ulaşılabilir, giderek ilerleyen görevler (s.27,32) | İpucu Avı → Karar Ver → Uygula aşamaları; ardından becerileri birleştiren altı yeni final durumu. |
 | Başlangıç desteği ve gelişme fırsatı (s.27,32) | Puanı etkilemeyen isteğe bağlı ısınma turu, her soruda ipucu, açıklamalı dönüt ve tekrar keşif. Isınma, puanlı turdaki kayıtlı noktayı silmez. |
-| İçerik açma (s.27–28) | Yeni hikâye bölümleri ve koleksiyon eşyaları ustalıkla açılır; final altı adanın güncel ustalığını gerektirir. Normal adalar alternatif yol seçimi için açık kalır. |
+| İçerik açma (s.27–28) | Yeni hikâye bölümleri ve koleksiyon eşyaları ustalıkla açılır; final altı adanın güncel ustalığını gerektirir. Her ada, önceki bütün adalar tamamlandıktan sonra açılır. Kilit, ısınma turları ve kaydedilmiş eski oturumlar için de sunucuda denetlenir. |
 | Puan, seviye, statü ve lider tablosu (s.19–21,26–30) | Sunucuda hesaplanan XP, seviyeler, ortak kaşifler ligi; kişisel beceri ilerlemesi ayrıca gösterilir. |
 | Koleksiyon ve alışveriş (s.21,27–28) | Sekiz kozmetik eşya. Her yeni doğru karar 5, her yeni ada rozeti 20 ışık taşı sağlar. Satın alma XP harcatmaz; eşyalar cevap doğruluğunu veya zorluğu etkilemez. Rastgele ödül ve gerçek para yoktur. |
 | Takım, işbirliği ve hediye (s.28,30) | İsteğe bağlı, kodla katılınan en fazla sekiz kişilik takımlar; en az iki üyeyle toplam 15 öğrenilmiş karar hedefi; tek seferlik 20 taş ödülü; sahip olunan eşyayı takım arkadaşına devretme. |

@@ -47,3 +47,10 @@ Maceram düğmesi hikâye, keşif yolu, koleksiyon, takım, beceri ilerlemesi ve
 `npm test` sunucu, oyun, yetkilendirme, final ve hediye aktarımının testlerini çalıştırır. Playwright ve Chrome bulunan bir geliştirme ortamında `node tests/ui-smoke.mjs` arayüz akışlarını bellek içi veritabanıyla kontrol eder; canlı oyuncu verisine bağlanmaz. Gerekirse ilk argümanda Playwright modülünün dosya URL'si verilebilir. Görseller geçici klasöre yazılır; çıktı klasörü `UI_OUTPUT_DIR` ile seçilebilir.
 
 Yönetici oyuncu listesinde öğrenilen karar, tekrar gereken karar ve son final puanı da görünür.
+
+
+## Sıralı öğrenme ve etkinlikler
+
+Adalar 1–6 sırasında açılır. Beş kararı öğrenip adanın turunu tamamlamak bir sonraki adayı açar. Açılmış bir ada tekrar oynanırken hata yapmak geçmiş açılmayı geri almaz. Eski XP ve rozetler korunur; eski üç soruluk tamamlamalar, yeni beş sorunun öğrenilmesi yerine geçmez.
+
+İlk adada temel ipucu tanıma vardır. Sonraki adalar çoklu seçim, sıralama, eşleştirme ve doğru/yanlış etkinlikleriyle bilgileri birleştirmeyi gerektirir. Yeni etkinlik yanıtları istemcinin puanına güvenmeden sunucuda değerlendirilir. Yanlış cevap açıklamasında otomatik geçiş başlangıçta durur; öğrenci hazır olunca devam eder.
