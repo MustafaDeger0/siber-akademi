@@ -6,6 +6,7 @@ function renderPlayers(){
  const container=$('#admin-players');container.replaceChildren();
  for(const player of players.slice(page*size,(page+1)*size)){
   const form=document.createElement('form');form.className='admin-player';const info=document.createElement('p'),name=document.createElement('strong');name.textContent=player.username;info.append(name,document.createTextNode(` · ${player.xp} XP · ${player.completed} ada`));
+  if(player.learning){const note=document.createElement('small');note.textContent='Öğrenilen '+player.learning.known+'/30 · Tekrar '+player.learning.review+' · Final '+(player.learning.finalScore===null?'henüz yok':player.learning.finalScore+'/6');info.append(note);}
   const label=document.createElement('label');label.textContent='Yeni takma ad';const input=document.createElement('input');input.value=player.username;input.required=true;input.minLength=3;input.maxLength=20;label.append(input);
   const button=document.createElement('button');button.className='secondary';button.textContent='Adı değiştir';form.append(info,label,button);
   form.onsubmit=async e=>{e.preventDefault();button.disabled=true;try{await api('rename',{ref:player.ref,username:input.value});status('Takma ad güncellendi. Kaşifin ilerlemesi korundu.');await load();}catch(error){status(error.message);}finally{button.disabled=false;}};container.append(form);

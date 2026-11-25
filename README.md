@@ -38,3 +38,12 @@ Kaşif kartım → İlerlememi sıfırla, açık bir onaydan sonra yalnızca o t
 /yonetim adresi takma ad arama ve değiştirme ekranıdır. Render servisinde SIBER_ADMIN_PASSWORD ortam değişkeni en az 16 karakterli güçlü bir şifre olarak ayarlanır; değeri kaynak koduna yazılmaz. Bu değişken Blueprint dışında servis üzerinde tutulur; Blueprint'te tanımlı olmayan mevcut değişkenler korunur. Şifre yoksa yönetim API'si kapalıdır. Yerelde de aynı değişken kullanılabilir.
 
 Giriş oturumu HttpOnly, üretimde Secure ve SameSite=Strict çereziyle 8 saat sürer. Başarısız girişler sınırlıdır. Öğrenci oturum anahtarları yönetici listesinde paylaşılmaz; sunucuya özel referans kullanılır. Ad değişikliği puan, avatar ve ilerlemeye dokunmaz. Şifre değişimi veya yeniden dağıtım yönetici oturumlarını kapatır. Yönetici şifresini yalnızca yönetim girişinde kullanın.
+
+
+## Yeni macera özellikleri
+
+Maceram düğmesi hikâye, keşif yolu, koleksiyon, takım, beceri ilerlemesi ve final ekranlarını açar. Tasarımın kaynak PDF ile eşleştirmesi [GAMIFICATION.md](GAMIFICATION.md) dosyasındadır. Mevcut oyuncuların XP ve rozetleri korunur; geçmiş kazanımlar ışık taşı bakiyesinde dikkate alınır. Final ayrıca bir kez 90 XP kazandırır.
+
+`npm test` sunucu, oyun, yetkilendirme, final ve hediye aktarımının testlerini çalıştırır. Playwright ve Chrome bulunan bir geliştirme ortamında `node tests/ui-smoke.mjs` arayüz akışlarını bellek içi veritabanıyla kontrol eder; canlı oyuncu verisine bağlanmaz. Gerekirse ilk argümanda Playwright modülünün dosya URL'si verilebilir. Görseller geçici klasöre yazılır; çıktı klasörü `UI_OUTPUT_DIR` ile seçilebilir.
+
+Yönetici oyuncu listesinde öğrenilen karar, tekrar gereken karar ve son final puanı da görünür.

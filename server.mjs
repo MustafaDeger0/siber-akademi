@@ -12,7 +12,7 @@ export function createApp(db,{production=process.env.NODE_ENV==='production',pub
  const cookieName=production?'__Host-academy':'academy';
  const html=readFileSync(new URL('./public/index.html',import.meta.url));
  const favicon=readFileSync(new URL('./public/favicon.svg',import.meta.url));
- const assets=new Map(['/app.css','/app.mjs','/worlds.mjs','/characters.mjs','/badge-art.mjs','/rewards-v3.css','/readability-v4.css','/screen-fit.css','/admin.mjs'].map(path=>[path,{body:readFileSync(new URL('./public'+path,import.meta.url)),type:path.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8'}]));
+ const assets=new Map(['/app.css','/app.mjs','/worlds.mjs','/characters.mjs','/badge-art.mjs','/rewards-v3.css','/readability-v4.css','/screen-fit.css','/adventure.css','/adventure-data.mjs','/adventure-ui.mjs','/admin.mjs'].map(path=>[path,{body:readFileSync(new URL('./public'+path,import.meta.url)),type:path.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8'}]));
  const rates=new Map();
  const timer=setInterval(()=>rates.clear(),60000);timer.unref();
  const server=createServer(async(req,res)=>{
