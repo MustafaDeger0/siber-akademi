@@ -58,3 +58,7 @@ Adalar 1–6 sırasında açılır. Beş kararı öğrenip adanın turunu tamaml
 ## Öğrenme atölyesi
 
 Maceram → Becerilerim ekranı, son yanıtlara göre destek önerisi ve zamanlı hatırlama planını gösterir. Uygula sekmesinde hesap ayarları ve kanıt işaretleme simülasyonları vardır. Takımım ortak görevinde üyelerin ayrı parçaları çözmesi ve birleşen planı onaylaması gerekir. Bu etkinlikler XP kazandırmaz veya düşürmez. Yönetim panelindeki öğrenme gözlemi alanı, öğrenciye geri bildirim iletir. Ayrıntılar GAMIFICATION.md dosyasındadır.
+
+## Karşılama ve ana sayfa
+
+İlk ziyaret karşılama sayfasıyla başlar. Üç adımlık tanıtım hikâyeyi, oynama biçimini ve altı ana bölümü açıklar; ardından kaşif kartı oluşturulabilir. Kayıtlı kaşifler ana sayfada ilerlemelerini ve bütün bölüm bağlantılarını görür. Devam düğmesi ada özetini açar; sorular ayrıca başlatılır. Sayfayı yenilemek otomatik soru başlatmaz. Ana sayfaya sol menüden veya başlıktaki ev düğmesinden dönülür.
