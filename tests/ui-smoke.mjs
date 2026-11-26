@@ -11,7 +11,7 @@ import {join} from 'node:path';
 const {chromium}=await import(process.argv[2]||'playwright');
 const output=process.env.UI_OUTPUT_DIR||join(tmpdir(),'academy-ui-smoke');mkdirSync(output,{recursive:true});
 process.env.SQLITE_PATH=':memory:';const db=await openDatabase(''),server=createApp(db,{production:false,publicUrl:'https://academy.test'});
-const browser=await chromium.launch({headless:true,channel:'chrome'}),context=await browser.newContext({viewport:{width:1536,height:698}}),page=await context.newPage(),errors=[];
+const browser=await chromium.launch({headless:true,...(process.env.UI_CHROME_PATH?{executablePath:process.env.UI_CHROME_PATH}:{channel:'chrome'})}),context=await browser.newContext({viewport:{width:1536,height:698}}),page=await context.newPage(),errors=[];
 page.on('pageerror',e=>errors.push(e.message));
 page.setDefaultTimeout(10000);
 function request(path,method,headers,body){return new Promise((resolve,reject)=>{const req=Readable.from(body?[Buffer.from(body)]:[]);req.url=path;req.method=method;req.headers={host:'academy.test',...headers};const chunks=[],result={};const res=new Writable({write(chunk,enc,done){chunks.push(Buffer.from(chunk));done()}});res.setHeader=(key,value)=>result[key.toLowerCase()]=value;res.writeHead=(status,values)=>{res.status=status;res.headersSent=true;Object.entries(values).forEach(([k,v])=>res.setHeader(k,v));};res.on('error',reject);res.on('finish',()=>resolve({status:res.status,headers:result,body:Buffer.concat(chunks)}));server.emit('request',req,res);});}
@@ -33,13 +33,17 @@ try{
  await page.setViewportSize({width:1536,height:698});await shot('profile');
 
  await page.locator('[data-view="map"]').first().click();assert.equal(await page.locator('button.island[data-world="account"]').isDisabled(),true);assert.equal(await page.locator('button.island[data-world="message"]').isEnabled(),true);
- for(const [mission,index] of [['account',3],['account',4],['privacy',4],['kindness',2]]){
+ for(const [mission,index] of [['account',3],['account',4],['privacy',4],['kindness',2],['message',0],['privacy',0],['kindness',3],['truth',1],['gaming',2],['kindness',0],['account',1]]){
   const order=Object.keys(answers),position=order.indexOf(mission),fixture=fresh();fixture.done=order.slice(0,position);fixture.cleared=[...fixture.done];fixture.adventure={introduced:true};
   for(const id of fixture.done)for(let i=0;i<5;i++)fixture.claimed.push(id+':'+i);
   for(let i=0;i<5;i++)if(i!==index)fixture.claimed.push(mission+':'+i);fixture.total=fixture.claimed.length*30;
   await db.prepare('UPDATE players SET document=?,xp=?,completed=? WHERE username=?').bind(JSON.stringify(fixture),fixture.total,fixture.done.length,'UI_Kasif').run();await page.reload();await waitReady();await page.locator('[data-view="map"]').first().click();await page.locator('button.island[data-world="'+mission+'"]').click();await page.locator('#start-region').click();await page.locator('.quiz-dialog').waitFor();
   const response=answers[mission][index];
-  if(mission==='account'&&index===3){for(const option of response)await page.locator('[data-option="'+option+'"]').click();await shot('multi');}
+  const {worlds:coreWorlds}=await import('../public/worlds.mjs'),coreQ=coreWorlds.find(w=>w.id===mission).questions[index];
+  if(coreQ.type==='hotspot'){await page.locator('[data-spot="'+response+'"]').click();await shot('core-'+mission+'-'+index);}
+  else if(coreQ.type==='classify'){for(const [row,group]of response.entries())await page.locator('[data-classify="'+row+':'+group+'"]').click();await shot('core-'+mission+'-'+index);}
+  else if(coreQ.type==='comic'){await page.locator('[data-option="'+response+'"]').click();await shot('core-'+mission+'-'+index);}
+  else if(mission==='account'&&index===3){for(const option of response)await page.locator('[data-option="'+option+'"]').click();await shot('multi');}
   else if(mission==='account'){
    for(let target=0;target<response.length;target++){const labels=await page.locator('.order-label').allTextContents();const {worlds}=await import('../public/worlds.mjs');const wanted=worlds.find(w=>w.id===mission).questions[index].options[response[target]];let from=labels.indexOf(wanted);while(from>target){await page.locator('[data-move="'+from+':-1"]').click();from--;}}
    await shot('order');
@@ -64,6 +68,18 @@ try{
  await page.locator('[data-review="message"]').first().click();await page.locator('.quiz-dialog').waitFor();assert.match(await page.locator('.quiz-meta').innerText(),/HATIRLAMA/);await page.locator('.question-hint summary').click();await page.locator('[data-option="1"]').click();await page.locator('#answer-action').click();await page.locator('.answer-success').waitFor();await page.locator('#continue-answer').click();await page.locator('[data-review="message"]').first().waitFor();
  const hintRow=await db.prepare('SELECT document FROM players WHERE username=?').bind('UI_Kasif').first();assert.equal(JSON.parse(hintRow.document).learning.skills.message.recent.at(-1).hintUsed,true);
  await tab('transfer');await page.locator('[data-transfer="settings-lab"]').click();for(let i=0;i<3;i++)await page.locator('[data-match="'+i+'"]').selectOption('1');await shot('settings-simulation');await page.locator('#answer-action').click();await page.locator('.answer-success').waitFor();await page.locator('#continue-answer').click();await page.locator('[data-transfer="evidence-lab"]').click();for(const i of [1,2])await page.locator('[data-option="'+i+'"]').click();await shot('evidence-simulation');await page.locator('#answer-action').click();await page.locator('.answer-success').waitFor();await page.locator('#continue-answer').click();await page.locator('[data-transfer="evidence-lab"]').waitFor();
+
+ const {visualTasks}=await import('../public/visual-data.mjs');
+ const labFit=await page.locator('#adventure-content').evaluate(e=>({scroll:e.scrollHeight,client:e.clientHeight}));assert.ok(labFit.scroll<=labFit.client+1,JSON.stringify(labFit));await shot('visual-labs');
+ for(const task of visualTasks){
+  if(await page.locator('[data-transfer="'+task.id+'"]').count()===0)await page.locator('#labs-next').click();
+  await page.locator('[data-transfer="'+task.id+'"]').click();await page.locator('.quiz-dialog').waitFor();assert.equal(await page.locator('#answer-action').isDisabled(),true);
+  if(task.type==='hotspot'){const values=Array.isArray(task.correct)?task.correct:[task.correct];for(const value of values){await page.locator('[data-spot="'+value+'"]').focus();await page.keyboard.press('Enter');}assert.equal(await page.locator('.hotspot-pin.selected').count(),values.length);if(task.id==='visual-privacy'){await page.setViewportSize({width:390,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await shot('phone-photo-detective');await page.setViewportSize({width:1536,height:698});}}
+  else if(task.type==='classify'){for(const [row,group] of task.correct.entries()){if(row===0){await page.locator('[data-classify="0:1"]').focus();await page.keyboard.press('ArrowLeft');}else await page.locator('[data-classify="'+row+':'+group+'"]').click();}assert.equal(await page.locator('[role="radio"][aria-checked="true"]').count(),task.items.length);}
+  else{assert.equal(await page.locator('.comic-strip li').count(),3);await page.locator('[data-option="'+task.correct+'"]').click();}
+  const visualFit=await page.locator('dialog').evaluate(e=>({scroll:e.scrollHeight,client:e.clientHeight}));assert.ok(visualFit.scroll<=visualFit.client+1,task.id+JSON.stringify(visualFit));await shot(task.id);await page.locator('#answer-action').click();await page.locator('.answer-success').waitFor();await page.locator('#continue-answer').click();await page.locator('.visual-lab-grid').waitFor();
+ }
+ console.log('Six visual missions passed: image hotspots, classification, comic, keyboard, phone layout, server grading');
  await tab('team');await page.locator('[data-team-mode="project"]').click();const ownerRow=await db.prepare('SELECT id FROM players WHERE username=?').bind('UI_Kasif').first();const ownProject=await (await import('../lib/crew.mjs')).crewView(db,ownerRow.id);assert.equal(ownProject.project.mine.question.type,'multi');for(const i of ownProject.project.mine.question.correct)await page.locator('#project-question [data-option="'+i+'"]').click();await page.locator('#contribute-project').click();await page.locator('#refresh-crew').waitFor();const friendProject=await (await import('../lib/crew.mjs')).crewView(db,'test-friend');await crewAction(db,'test-friend',{type:'project-contribute',option:friendProject.project.mine.question.correct},'2026-11-25');await page.locator('#refresh-crew').click();await page.locator('#approve-project').click();await page.locator('#approve-project:disabled').waitFor();await crewAction(db,'test-friend',{type:'project-approve'},'2026-11-25');await page.locator('#refresh-crew').click();await page.getByText('Ortak planınız hazır!').waitFor();await shot('shared-project');
  console.log('Learning UI passed: recall, settings simulation, evidence selection, shared plan and dashboard fit');
  await tab('final');await page.locator('#start-final').click();await page.locator('.quiz-dialog').waitFor();

@@ -36,3 +36,9 @@ Profil, eski karşılama sayfasını yeniden kullanmaz. Masaüstünde ekran yük
 - Ortak görevde kanıt, eylem planı ve güvenli paylaşım rolleri vardır. En az iki üyenin her biri kendi parçasını çözer ve herkes birleşen planı onaylar. Üyelik değişirse yeni ortak plan başlar. Puan toplama hedefi bu görevden ayrıdır.
 - Yönetici 500 karaktere kadar gözlem/öneri kaydeder. Öğrenci Becerilerim ekranında okur. Not sıfırlamada korunur; öğretmen silebilir. Uygulama, hatırlama ve ortak çözüm göstergeleri yönetim panelindedir.
 - Çeldiriciler yaygın yanlış akıl yürütmelere yaklaştırılmıştır. Güçlük için gerçek öğrenci pilotu ve madde analizi hâlâ gereklidir. Mevcut soru bankası sonludur; uyarlama yeni soru üretmez.
+
+## Görsel karar verme
+
+Temel adalardaki otuz karar korunarak sekiz sunum/etkileşim biçimine geçildi: tekli seçim, çoklu seçim, sıralama, eşleştirme, doğru/yanlış, görsel alan seçimi, sınıflandırma ve çizgi roman üzerinden karar. Çizgi romanın yanıtı tekli seçimdir; farkı, sosyal durumu art arda gelen görsel karelerden yorumlamaktır. Sınıflandırmada her karta bir kategori atanır; sürükleme zorunlu değildir.
+
+Uygula bölümündeki iki görev, altı yeni görevle sekize çıkarıldı. Sırasıyla ödül mesajındaki kanıt, hesap koruma alışkanlıkları, fotoğrafta kişisel bilgi, zarar yaymadan arkadaş desteği, kaynakların niteliği ve yenilenen ödeme koşulları uygulanır. Görseller dikkat dağıtan ödül animasyonu yerine karar için gerekli bağlamı taşır. İşaretlenecek alanlara metinli alternatif ve klavye erişimi sağlanır. Yönetim panelindeki uygulama paydası güncel görev sayısını kullanır.

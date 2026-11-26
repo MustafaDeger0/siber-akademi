@@ -62,3 +62,11 @@ Maceram → Becerilerim ekranı, son yanıtlara göre destek önerisi ve zamanl�
 ## Karşılama ve ana sayfa
 
 İlk ziyaret karşılama sayfasıyla başlar. Üç adımlık tanıtım hikâyeyi, oynama biçimini ve altı ana bölümü açıklar; ardından kaşif kartı oluşturulabilir. Kayıtlı kaşifler ana sayfada ilerlemelerini ve bütün bölüm bağlantılarını görür. Devam düğmesi ada özetini açar; sorular ayrıca başlatılır. Sayfayı yenilemek otomatik soru başlatmaz. Ana sayfaya sol menüden veya başlıktaki ev düğmesinden dönülür.
+
+## Görsel etkinlikler
+
+Ada sorularında görsel üzerinde alan seçme, karar kartlarını sınıflandırma ve üç kareli hikâyeler bulunur. Önceki bütün doğru yanıt indeksleri, soru ödül anahtarları ve ada ilerlemesi korunur. Uygula bölümüne her ada için bir görsel görev eklendi; toplam sekiz uygulama dört kartlık sayfalarda gösterilir. Görevler ilgili ada tamamlandıktan sonra açılır ve XP değiştirmez.
+
+Görseller uygulamanın mevcut çizim diliyle SVG olarak hazırlanır; fotoğraf, telefon ve mağaza örnekleri gerçek kişisel bilgi veya ödeme kullanmaz. Alanlar hem görseldeki numaralardan hem metin listesinden seçilebilir. Görseldeki yazının metin karşılığı açılabilir; sınıflandırma kartları klavye oklarıyla kullanılabilir.
+
+`UI_CHROME_PATH` değişkeni, tarayıcı testlerinde standart Chrome yerine bir Chromium yürütülebilir dosyası seçmek için kullanılabilir.

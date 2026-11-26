@@ -1,3 +1,4 @@
+import {applyVisualActivities} from './visual-data.mjs';
 import {applyChallenges} from './challenge-content.mjs';
 const q=(title,kind,from,text,ask,options,correct,why,hint)=>({title,kind,from,text,ask,options,correct,why,hint});
 export const course={grade:'5–6. sınıf',lesson:'Bilişim Teknolojileri ve Yazılım',topic:'Güvenli internet ve dijital vatandaşlık'};
@@ -40,4 +41,5 @@ q('Mola zamanı','notice','Oyun planım','Ailenle belirlediğin oyun süresi bit
 q('Takas teklifi','chat','Tanımadığın oyuncu','Önce eşyalarını gönder, sonra daha değerlisini yollarım.','Hangi yol daha güvenli?',['Eşya göndermem; oyunun kurallarını ve güvenli takas sistemini yetişkinimle kontrol ederim','Profili renkliyse kabul ederim','Önce arkadaşımın eşyalarını gönderirim'],0,'Bir oyuncunun sözü, eşyalarını geri alacağını garanti etmez. Kuralları kontrol et.','Sözünü tutmazsa eşyalarını geri alabilir misin?')]}
  ];
 applyChallenges(worlds);
+applyVisualActivities(worlds);
 export const ranks=[{at:0,name:'Yeni Kaşif'},{at:150,name:'İpucu Avcısı'},{at:400,name:'Kalkan Ustası'},{at:750,name:'Dijital Koruyucu'},{at:1100,name:'Akademi Kahramanı'}];
