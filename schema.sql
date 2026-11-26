@@ -10,6 +10,9 @@ CREATE TABLE IF NOT EXISTS players (
  created_at BIGINT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS players_ranking ON players (xp,completed,created_at);
+CREATE TABLE IF NOT EXISTS accounts (player_id TEXT PRIMARY KEY REFERENCES players(id) ON DELETE CASCADE,password_hash TEXT NOT NULL,created_at BIGINT NOT NULL);
+CREATE TABLE IF NOT EXISTS account_sessions (token_hash TEXT PRIMARY KEY,player_id TEXT NOT NULL REFERENCES players(id) ON DELETE CASCADE,expires_at BIGINT NOT NULL);
+CREATE INDEX IF NOT EXISTS account_sessions_expiry ON account_sessions(expires_at);
 CREATE TABLE IF NOT EXISTS crews (code TEXT PRIMARY KEY,created_at BIGINT NOT NULL);
 CREATE TABLE IF NOT EXISTS crew_members (
  player_id TEXT PRIMARY KEY REFERENCES players(id) ON DELETE CASCADE,

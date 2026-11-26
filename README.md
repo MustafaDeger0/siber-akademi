@@ -70,3 +70,9 @@ Ada sorularında görsel üzerinde alan seçme, karar kartlarını sınıflandı
 Görseller uygulamanın mevcut çizim diliyle SVG olarak hazırlanır; fotoğraf, telefon ve mağaza örnekleri gerçek kişisel bilgi veya ödeme kullanmaz. Alanlar hem görseldeki numaralardan hem metin listesinden seçilebilir. Görseldeki yazının metin karşılığı açılabilir; sınıflandırma kartları klavye oklarıyla kullanılabilir.
 
 `UI_CHROME_PATH` değişkeni, tarayıcı testlerinde standart Chrome yerine bir Chromium yürütülebilir dosyası seçmek için kullanılabilir.
+
+## Maceram paneli
+
+Maceram, Yolculuğum özetiyle açılır. Sıradaki ada, altı adanın tamamlanma/kilit durumları, öğrenilen kararlar ve tekrar zamanı gösterilir. Masaüstünde bölüm menüsü yanda sabit kalır; telefonda altı bölüm iki satırlık menüdedir. Her bölümün konumu üstte görünür. Ana sayfaya dönüş ve haritaya geçiş ayrı düğmelerdir. Koleksiyon ikincil bağlantıdır.
+
+Giriş/çıkış üst menüde, giriş ve hesap oluşturma karşılama sayfasındadır. Profilde takma ad değişirse sonraki girişte yeni takma ad kullanılır. Şifre özeti veya oturum anahtarı oyuncu, takım ve yönetim listelerine gönderilmez. Yeni tablolar mevcut verileri silmeden oluşturulur.
